@@ -8,6 +8,7 @@ using System.IO;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 public class ShowAnswer : MonoBehaviour
 {
     // Declare variables
@@ -26,21 +27,23 @@ public class ShowAnswer : MonoBehaviour
 
 
     // method to read csv file and split each line and add them to the two lists. 
+    // in order to use the app on Android, place the csv file in the Assets/Resources/ folder. I also changed the file extension to .txt, although I haven't tested whether this is necessary. 
     public void InitializeCards()
     {
-        string filePath = "Assets/Data/FlashcardData.csv";
-        using (StreamReader reader = new StreamReader(filePath))
+        TextAsset dataFile = Resources.Load<TextAsset>("FlashcardData"); 
+        string data = dataFile.text;
+        using (StringReader reader = new StringReader(data))
         {
             questions = new List<string>(); // initializing questions and answers here because Awake() was called multiple times.
             answers = new List<string>();
-
+            Regex CSVParser = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
             string line;
 
             while (reader.Peek() != -1)
             {
                 line = reader.ReadLine();
 
-                var values = line.Split(',');
+                var values = CSVParser.Split(line);
 
                 questions.Add(values[0]);
                 answers.Add(values[1]);
@@ -68,7 +71,7 @@ public class ShowAnswer : MonoBehaviour
     public void Start()
     {
         answer.SetActive(false);
-        answerButton.GetComponentInChildren<Text>().text = "Show Answer";
+        //answerButton.GetComponentInChildren<Text>().text = "Show";
         cardIndex = 0; // starting from 0 because there is no header row now
         question.GetComponent<Text>().text = questions[cardIndex];
         answer.GetComponent<Text>().text = answers[cardIndex];
@@ -83,13 +86,13 @@ public class ShowAnswer : MonoBehaviour
         if (answerIsShown)
         {
             answer.SetActive(true);
-            answerButton.GetComponentInChildren<Text>().text = "Hide Answer";
+            //answerButton.GetComponentInChildren<Text>().text = "Hide";
 
         }
         else
         {
             answer.SetActive(false);
-            answerButton.GetComponentInChildren<Text>().text = "Show Answer";
+            //answerButton.GetComponentInChildren<Text>().text = "Show";
             answerIsShown = false;
         }
     }
@@ -101,7 +104,7 @@ public class ShowAnswer : MonoBehaviour
         cardIndex += 1;
         answerIsShown = false;
         answer.SetActive(false);
-        answerButton.GetComponentInChildren<Text>().text = "Show Answer";
+        //answerButton.GetComponentInChildren<Text>().text = "Show";
         question.GetComponent<Text>().text = questions[cardIndex];
         answer.GetComponent<Text>().text = answers[cardIndex];
         // If the cardIndex reaches the end of the list, make the button non-interactable.
@@ -127,7 +130,7 @@ public class ShowAnswer : MonoBehaviour
         cardIndex -= 1;
         answerIsShown = false;
         answer.SetActive(false);
-        answerButton.GetComponentInChildren<Text>().text = "Show Answer";
+        //answerButton.GetComponentInChildren<Text>().text = "Show";
         question.GetComponent<Text>().text = questions[cardIndex];
         answer.GetComponent<Text>().text = answers[cardIndex];
         if (cardIndex <= 0)
@@ -170,6 +173,11 @@ public class ShowAnswer : MonoBehaviour
         }
         questions = shuffledQuestions;
         answers = shuffledAnswers;
+        cardIndex = 0;
+        question.GetComponent<Text>().text = questions[cardIndex];
+        answer.GetComponent<Text>().text = answers[cardIndex];
+        nextButton.interactable = true;
+        previousButton.interactable = false;
 
     }
 }
