@@ -71,7 +71,6 @@ public class ShowAnswer : MonoBehaviour
     public void Start()
     {
         answer.SetActive(false);
-        //answerButton.GetComponentInChildren<Text>().text = "Show";
         cardIndex = 0; // starting from 0 because there is no header row now
         question.GetComponent<Text>().text = questions[cardIndex];
         answer.GetComponent<Text>().text = answers[cardIndex];
@@ -86,13 +85,11 @@ public class ShowAnswer : MonoBehaviour
         if (answerIsShown)
         {
             answer.SetActive(true);
-            //answerButton.GetComponentInChildren<Text>().text = "Hide";
 
         }
         else
         {
             answer.SetActive(false);
-            //answerButton.GetComponentInChildren<Text>().text = "Show";
             answerIsShown = false;
         }
     }
@@ -104,7 +101,6 @@ public class ShowAnswer : MonoBehaviour
         cardIndex += 1;
         answerIsShown = false;
         answer.SetActive(false);
-        //answerButton.GetComponentInChildren<Text>().text = "Show";
         question.GetComponent<Text>().text = questions[cardIndex];
         answer.GetComponent<Text>().text = answers[cardIndex];
         // If the cardIndex reaches the end of the list, make the button non-interactable.
@@ -130,7 +126,6 @@ public class ShowAnswer : MonoBehaviour
         cardIndex -= 1;
         answerIsShown = false;
         answer.SetActive(false);
-        //answerButton.GetComponentInChildren<Text>().text = "Show";
         question.GetComponent<Text>().text = questions[cardIndex];
         answer.GetComponent<Text>().text = answers[cardIndex];
         if (cardIndex <= 0)
@@ -178,6 +173,7 @@ public class ShowAnswer : MonoBehaviour
         answer.GetComponent<Text>().text = answers[cardIndex];
         nextButton.interactable = true;
         previousButton.interactable = false;
+        answer.SetActive(false);
 
     }
 }
