@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TMPro;
 public class ShowAnswer : MonoBehaviour
 {
     // Declare variables
@@ -72,8 +73,8 @@ public class ShowAnswer : MonoBehaviour
     {
         answer.SetActive(false);
         cardIndex = 0; // starting from 0 because there is no header row now
-        question.GetComponent<Text>().text = questions[cardIndex];
-        answer.GetComponent<Text>().text = answers[cardIndex];
+        question.GetComponent<TMP_Text>().text = questions[cardIndex];
+        answer.GetComponent<TMP_Text>().text = answers[cardIndex];
     }
 
     // Function that shows the Answer when mouse hover over the card
@@ -101,8 +102,8 @@ public class ShowAnswer : MonoBehaviour
         cardIndex += 1;
         answerIsShown = false;
         answer.SetActive(false);
-        question.GetComponent<Text>().text = questions[cardIndex];
-        answer.GetComponent<Text>().text = answers[cardIndex];
+        question.GetComponent<TMP_Text>().text = questions[cardIndex];
+        answer.GetComponent<TMP_Text>().text = answers[cardIndex];
         // If the cardIndex reaches the end of the list, make the button non-interactable.
         if (cardIndex >= questions.Count - 1)
         {
@@ -126,8 +127,8 @@ public class ShowAnswer : MonoBehaviour
         cardIndex -= 1;
         answerIsShown = false;
         answer.SetActive(false);
-        question.GetComponent<Text>().text = questions[cardIndex];
-        answer.GetComponent<Text>().text = answers[cardIndex];
+        question.GetComponent<TMP_Text>().text = questions[cardIndex];
+        answer.GetComponent<TMP_Text>().text = answers[cardIndex];
         if (cardIndex <= 0)
         {
             previousButton.interactable = false;
@@ -169,8 +170,8 @@ public class ShowAnswer : MonoBehaviour
         questions = shuffledQuestions;
         answers = shuffledAnswers;
         cardIndex = 0;
-        question.GetComponent<Text>().text = questions[cardIndex];
-        answer.GetComponent<Text>().text = answers[cardIndex];
+        question.GetComponent<TMP_Text>().text = questions[cardIndex];
+        answer.GetComponent<TMP_Text>().text = answers[cardIndex];
         nextButton.interactable = true;
         previousButton.interactable = false;
         answer.SetActive(false);
